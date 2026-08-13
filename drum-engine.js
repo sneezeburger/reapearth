@@ -161,15 +161,17 @@ class DrumEngine {
     }
 
     playRim(t) {
+        const p = this.params.rim;
+        const toneMul = 0.7 + ((p.tone || 50) / 100) * 0.6;
         const osc = this.ctx.createOscillator();
         const osc2 = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
-        osc.type = 'square'; osc.frequency.value = 1700;
-        osc2.type = 'square'; osc2.frequency.value = 900;
+        osc.type = 'square'; osc.frequency.value = 1700 * toneMul;
+        osc2.type = 'square'; osc2.frequency.value = 900 * toneMul;
         gain.gain.setValueAtTime(0.6, t);
         gain.gain.exponentialRampToValueAtTime(0.01, t + 0.01);
         const filter = this.ctx.createBiquadFilter();
-        filter.type = 'bandpass'; filter.frequency.value = 3000; filter.Q.value = 5;
+        filter.type = 'bandpass'; filter.frequency.value = 3000 * toneMul; filter.Q.value = 5;
         osc.connect(filter); osc2.connect(filter); filter.connect(gain); gain.connect(this.masterGain);
         osc.start(t); osc.stop(t + 0.02); osc2.start(t); osc2.stop(t + 0.02);
     }
@@ -223,13 +225,15 @@ class DrumEngine {
     }
 
     playCowbell(t) {
+        const p = this.params.cowbell;
+        const toneMul = 0.7 + ((p.tone || 50) / 100) * 0.6;
         const osc1 = this.ctx.createOscillator();
         const osc2 = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
         const filter = this.ctx.createBiquadFilter();
-        osc1.type = 'square'; osc1.frequency.value = 560;
-        osc2.type = 'square'; osc2.frequency.value = 845;
-        filter.type = 'bandpass'; filter.frequency.value = 700; filter.Q.value = 3;
+        osc1.type = 'square'; osc1.frequency.value = 560 * toneMul;
+        osc2.type = 'square'; osc2.frequency.value = 845 * toneMul;
+        filter.type = 'bandpass'; filter.frequency.value = 700 * toneMul; filter.Q.value = 3;
         gain.gain.setValueAtTime(0.5, t);
         gain.gain.exponentialRampToValueAtTime(0.01, t + 0.3);
         osc1.connect(filter); osc2.connect(filter); filter.connect(gain); gain.connect(this.masterGain);
@@ -259,13 +263,15 @@ class DrumEngine {
     }
 
     playClaves(t) {
+        const p = this.params.claves;
+        const toneFreq = 1800 + ((p.tone || 50) / 100) * 1400;
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
-        osc.type = 'sine'; osc.frequency.value = 2500;
+        osc.type = 'sine'; osc.frequency.value = toneFreq;
         gain.gain.setValueAtTime(0.6, t);
         gain.gain.exponentialRampToValueAtTime(0.01, t + 0.03);
         const filter = this.ctx.createBiquadFilter();
-        filter.type = 'bandpass'; filter.frequency.value = 2500; filter.Q.value = 20;
+        filter.type = 'bandpass'; filter.frequency.value = toneFreq; filter.Q.value = 20;
         osc.connect(filter); filter.connect(gain); gain.connect(this.masterGain);
         osc.start(t); osc.stop(t + 0.05);
     }
