@@ -76,9 +76,9 @@ class Transport {
         let swingOffset = 0;
         if (this.swing > 0) {
             if (this.currentStep % 2 === 0) {
-                swingOffset = -(this.swing * secondsPer16th * 0.5);
-            } else {
                 swingOffset = this.swing * secondsPer16th * 0.5;
+            } else {
+                swingOffset = -(this.swing * secondsPer16th * 0.5);
             }
         }
 
