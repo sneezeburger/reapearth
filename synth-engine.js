@@ -75,19 +75,7 @@ class SynthEngine {
         const prevStep = (step - 1 + 16) % 16;
         const prevSlide = this.pattern[prevStep].slide && this.pattern[prevStep].active;
 
-        // Only glide if the previous voice is still alive
-        let canSlide = prevSlide && this.activeOsc && this.activeGain;
-        if (canSlide) {
-            // Check the gain hasn't already decayed — if it has, the voice is dead
-            try {
-                const currentGain = this.activeGain.gain.value;
-                if (currentGain < 0.01) canSlide = false;
-            } catch (e) {
-                canSlide = false;
-            }
-        }
-
-        if (canSlide) {
+        if (prevSlide && this.activeOsc) {
             this.activeOsc.frequency.cancelScheduledValues(time);
             this.activeOsc.frequency.setValueAtTime(this.activeOsc.frequency.value, time);
             this.activeOsc.frequency.exponentialRampToValueAtTime(freq, time + 0.06);
