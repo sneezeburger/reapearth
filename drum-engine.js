@@ -75,16 +75,16 @@ class DrumEngine {
             case 'snare': this.playSnare(t); break;
             case 'clap': this.playClap(t); break;
             case 'rim': this.playRim(t); break;
-            case 'tom_low': this.playTom(t, 80); break;
-            case 'tom_mid': this.playTom(t, 120); break;
-            case 'tom_hi': this.playTom(t, 160); break;
+            case 'tom_low': this.playTom(t, 80, 'tom_low'); break;
+            case 'tom_mid': this.playTom(t, 120, 'tom_mid'); break;
+            case 'tom_hi': this.playTom(t, 160, 'tom_hi'); break;
             case 'hihat_closed': this.playHihat(t, false); break;
             case 'hihat_open': this.playHihat(t, true); break;
             case 'cymbal': this.playCymbal(t); break;
             case 'cowbell': this.playCowbell(t); break;
-            case 'conga_hi': this.playConga(t, 420); break;
-            case 'conga_mid': this.playConga(t, 340); break;
-            case 'conga_low': this.playConga(t, 260); break;
+            case 'conga_hi': this.playConga(t, 420, 'conga_hi'); break;
+            case 'conga_mid': this.playConga(t, 340, 'conga_mid'); break;
+            case 'conga_low': this.playConga(t, 260, 'conga_low'); break;
             case 'maracas': this.playMaracas(t); break;
             case 'claves': this.playClaves(t); break;
         }
@@ -176,12 +176,15 @@ class DrumEngine {
         osc.start(t); osc.stop(t + 0.02); osc2.start(t); osc2.stop(t + 0.02);
     }
 
-    playTom(t, baseFreq) {
+    playTom(t, baseFreq, inst) {
+        const p = this.params[inst] || {};
+        const toneMul = 0.6 + ((p.tone || 50) / 100) * 0.8;
+        const adjFreq = baseFreq * toneMul;
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(baseFreq * 1.5, t);
-        osc.frequency.exponentialRampToValueAtTime(baseFreq, t + 0.04);
+        osc.frequency.setValueAtTime(adjFreq * 1.5, t);
+        osc.frequency.exponentialRampToValueAtTime(adjFreq, t + 0.04);
         gain.gain.setValueAtTime(0.8, t);
         gain.gain.exponentialRampToValueAtTime(0.01, t + 0.3);
         osc.connect(gain); gain.connect(this.masterGain);
@@ -240,12 +243,15 @@ class DrumEngine {
         osc1.start(t); osc1.stop(t + 0.35); osc2.start(t); osc2.stop(t + 0.35);
     }
 
-    playConga(t, freq) {
+    playConga(t, freq, inst) {
+        const p = this.params[inst] || {};
+        const toneMul = 0.7 + ((p.tone || 50) / 100) * 0.6;
+        const adjFreq = freq * toneMul;
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(freq * 1.2, t);
-        osc.frequency.exponentialRampToValueAtTime(freq, t + 0.02);
+        osc.frequency.setValueAtTime(adjFreq * 1.2, t);
+        osc.frequency.exponentialRampToValueAtTime(adjFreq, t + 0.02);
         gain.gain.setValueAtTime(0.7, t);
         gain.gain.exponentialRampToValueAtTime(0.01, t + 0.15);
         osc.connect(gain); gain.connect(this.masterGain);
@@ -253,12 +259,14 @@ class DrumEngine {
     }
 
     playMaracas(t) {
-        const noise = this.createNoise(t, 0.05);
+        const p = this.params.maracas;
+        const decayVal = 0.02 + ((p.decay || 50) / 100) * 0.06;
+        const noise = this.createNoise(t, decayVal + 0.02);
         const filter = this.ctx.createBiquadFilter();
         const gain = this.ctx.createGain();
         filter.type = 'highpass'; filter.frequency.value = 8000;
         gain.gain.setValueAtTime(0.3, t);
-        gain.gain.exponentialRampToValueAtTime(0.01, t + 0.03);
+        gain.gain.exponentialRampToValueAtTime(0.01, t + decayVal);
         noise.connect(filter); filter.connect(gain); gain.connect(this.masterGain);
     }
 
