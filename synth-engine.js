@@ -17,7 +17,7 @@ class SynthEngine {
         this.envMod = 3000;
         this.decay = 0.3;
         this.accentAmount = 60;
-        this.volume = 0.75;
+        this.volume = 0.45;
 
         this.pattern = Array.from({ length: 16 }, () => ({
             active: false, note: 'C', octave: 2, accent: false, slide: false
