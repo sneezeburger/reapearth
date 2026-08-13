@@ -117,68 +117,9 @@
         </div>
     </header>
 
-    <div class="instrument-controls">
-        <div class="inst-control" data-instrument="kick">
-            <label>BASS DRUM</label>
-            <div class="knobs">
-                <div class="drum-knob-group"><span>TONE</span><input type="range" min="0" max="100" value="50" data-param="tone"></div>
-                <div class="drum-knob-group"><span>DECAY</span><input type="range" min="0" max="100" value="60" data-param="decay"></div>
-            </div>
-        </div>
-        <div class="inst-control" data-instrument="snare">
-            <label>SNARE DRUM</label>
-            <div class="knobs">
-                <div class="drum-knob-group"><span>TONE</span><input type="range" min="0" max="100" value="50" data-param="tone"></div>
-                <div class="drum-knob-group"><span>SNAPPY</span><input type="range" min="0" max="100" value="60" data-param="snappy"></div>
-            </div>
-        </div>
-        <div class="inst-control" data-instrument="clap">
-            <label>HAND CLAP</label>
-            <div class="knobs">
-                <div class="drum-knob-group"><span>DECAY</span><input type="range" min="0" max="100" value="50" data-param="decay"></div>
-            </div>
-        </div>
-        <div class="inst-control" data-instrument="hihat_closed">
-            <label>CLOSED HH</label>
-            <div class="knobs">
-                <div class="drum-knob-group"><span>DECAY</span><input type="range" min="0" max="100" value="30" data-param="decay"></div>
-            </div>
-        </div>
-        <div class="inst-control" data-instrument="hihat_open">
-            <label>OPEN HH</label>
-            <div class="knobs">
-                <div class="drum-knob-group"><span>DECAY</span><input type="range" min="0" max="100" value="60" data-param="decay"></div>
-            </div>
-        </div>
-        <div class="inst-control" data-instrument="cymbal">
-            <label>CYMBAL</label>
-            <div class="knobs">
-                <div class="drum-knob-group"><span>DECAY</span><input type="range" min="0" max="100" value="70" data-param="decay"></div>
-            </div>
-        </div>
-        <div class="inst-control" data-instrument="tom_low">
-            <label>LOW TOM</label>
-            <div class="knobs">
-                <div class="drum-knob-group"><span>TONE</span><input type="range" min="0" max="100" value="30" data-param="tone"></div>
-            </div>
-        </div>
-        <div class="inst-control" data-instrument="tom_mid">
-            <label>MID TOM</label>
-            <div class="knobs">
-                <div class="drum-knob-group"><span>TONE</span><input type="range" min="0" max="100" value="50" data-param="tone"></div>
-            </div>
-        </div>
-        <div class="inst-control" data-instrument="tom_hi">
-            <label>HI TOM</label>
-            <div class="knobs">
-                <div class="drum-knob-group"><span>TONE</span><input type="range" min="0" max="100" value="70" data-param="tone"></div>
-            </div>
-        </div>
-    </div>
-
     <div class="sequencer drum-sequencer">
         <div class="step-numbers">
-            <div class="instrument-label"></div>
+            <div class="track-left-spacer"></div>
             <div class="steps-row numbers">
                 <span>1</span><span>2</span><span>3</span><span>4</span>
                 <span>5</span><span>6</span><span>7</span><span>8</span>
@@ -186,22 +127,70 @@
                 <span>13</span><span>14</span><span>15</span><span>16</span>
             </div>
         </div>
-        <div class="track" data-instrument="kick"><div class="instrument-label">BD</div><div class="steps-row"></div></div>
-        <div class="track" data-instrument="snare"><div class="instrument-label">SD</div><div class="steps-row"></div></div>
-        <div class="track" data-instrument="clap"><div class="instrument-label">CP</div><div class="steps-row"></div></div>
-        <div class="track" data-instrument="rim"><div class="instrument-label">RS</div><div class="steps-row"></div></div>
-        <div class="track" data-instrument="tom_low"><div class="instrument-label">LT</div><div class="steps-row"></div></div>
-        <div class="track" data-instrument="tom_mid"><div class="instrument-label">MT</div><div class="steps-row"></div></div>
-        <div class="track" data-instrument="tom_hi"><div class="instrument-label">HT</div><div class="steps-row"></div></div>
-        <div class="track" data-instrument="hihat_closed"><div class="instrument-label">CH</div><div class="steps-row"></div></div>
-        <div class="track" data-instrument="hihat_open"><div class="instrument-label">OH</div><div class="steps-row"></div></div>
-        <div class="track" data-instrument="cymbal"><div class="instrument-label">CY</div><div class="steps-row"></div></div>
-        <div class="track" data-instrument="cowbell"><div class="instrument-label">CB</div><div class="steps-row"></div></div>
-        <div class="track" data-instrument="conga_hi"><div class="instrument-label">HC</div><div class="steps-row"></div></div>
-        <div class="track" data-instrument="conga_mid"><div class="instrument-label">MC</div><div class="steps-row"></div></div>
-        <div class="track" data-instrument="conga_low"><div class="instrument-label">LC</div><div class="steps-row"></div></div>
-        <div class="track" data-instrument="maracas"><div class="instrument-label">MA</div><div class="steps-row"></div></div>
-        <div class="track" data-instrument="claves"><div class="instrument-label">CL</div><div class="steps-row"></div></div>
+        <div class="track-wrapper" data-instrument="kick">
+            <div class="track"><div class="instrument-label" data-toggle-params>BD ▸</div><div class="steps-row"></div></div>
+            <div class="track-params"><span>TONE</span><input type="range" min="0" max="100" value="50" data-param="tone"><span>DECAY</span><input type="range" min="0" max="100" value="60" data-param="decay"></div>
+        </div>
+        <div class="track-wrapper" data-instrument="snare">
+            <div class="track"><div class="instrument-label" data-toggle-params>SD ▸</div><div class="steps-row"></div></div>
+            <div class="track-params"><span>TONE</span><input type="range" min="0" max="100" value="50" data-param="tone"><span>SNAPPY</span><input type="range" min="0" max="100" value="60" data-param="snappy"></div>
+        </div>
+        <div class="track-wrapper" data-instrument="clap">
+            <div class="track"><div class="instrument-label" data-toggle-params>CP ▸</div><div class="steps-row"></div></div>
+            <div class="track-params"><span>DECAY</span><input type="range" min="0" max="100" value="50" data-param="decay"></div>
+        </div>
+        <div class="track-wrapper" data-instrument="rim">
+            <div class="track"><div class="instrument-label" data-toggle-params>RS ▸</div><div class="steps-row"></div></div>
+            <div class="track-params"><span>TONE</span><input type="range" min="0" max="100" value="50" data-param="tone"></div>
+        </div>
+        <div class="track-wrapper" data-instrument="tom_low">
+            <div class="track"><div class="instrument-label" data-toggle-params>LT ▸</div><div class="steps-row"></div></div>
+            <div class="track-params"><span>TONE</span><input type="range" min="0" max="100" value="30" data-param="tone"></div>
+        </div>
+        <div class="track-wrapper" data-instrument="tom_mid">
+            <div class="track"><div class="instrument-label" data-toggle-params>MT ▸</div><div class="steps-row"></div></div>
+            <div class="track-params"><span>TONE</span><input type="range" min="0" max="100" value="50" data-param="tone"></div>
+        </div>
+        <div class="track-wrapper" data-instrument="tom_hi">
+            <div class="track"><div class="instrument-label" data-toggle-params>HT ▸</div><div class="steps-row"></div></div>
+            <div class="track-params"><span>TONE</span><input type="range" min="0" max="100" value="70" data-param="tone"></div>
+        </div>
+        <div class="track-wrapper" data-instrument="hihat_closed">
+            <div class="track"><div class="instrument-label" data-toggle-params>CH ▸</div><div class="steps-row"></div></div>
+            <div class="track-params"><span>DECAY</span><input type="range" min="0" max="100" value="30" data-param="decay"></div>
+        </div>
+        <div class="track-wrapper" data-instrument="hihat_open">
+            <div class="track"><div class="instrument-label" data-toggle-params>OH ▸</div><div class="steps-row"></div></div>
+            <div class="track-params"><span>DECAY</span><input type="range" min="0" max="100" value="60" data-param="decay"></div>
+        </div>
+        <div class="track-wrapper" data-instrument="cymbal">
+            <div class="track"><div class="instrument-label" data-toggle-params>CY ▸</div><div class="steps-row"></div></div>
+            <div class="track-params"><span>DECAY</span><input type="range" min="0" max="100" value="70" data-param="decay"></div>
+        </div>
+        <div class="track-wrapper" data-instrument="cowbell">
+            <div class="track"><div class="instrument-label" data-toggle-params>CB ▸</div><div class="steps-row"></div></div>
+            <div class="track-params"><span>TONE</span><input type="range" min="0" max="100" value="50" data-param="tone"></div>
+        </div>
+        <div class="track-wrapper" data-instrument="conga_hi">
+            <div class="track"><div class="instrument-label" data-toggle-params>HC ▸</div><div class="steps-row"></div></div>
+            <div class="track-params"><span>TONE</span><input type="range" min="0" max="100" value="70" data-param="tone"></div>
+        </div>
+        <div class="track-wrapper" data-instrument="conga_mid">
+            <div class="track"><div class="instrument-label" data-toggle-params>MC ▸</div><div class="steps-row"></div></div>
+            <div class="track-params"><span>TONE</span><input type="range" min="0" max="100" value="50" data-param="tone"></div>
+        </div>
+        <div class="track-wrapper" data-instrument="conga_low">
+            <div class="track"><div class="instrument-label" data-toggle-params>LC ▸</div><div class="steps-row"></div></div>
+            <div class="track-params"><span>TONE</span><input type="range" min="0" max="100" value="30" data-param="tone"></div>
+        </div>
+        <div class="track-wrapper" data-instrument="maracas">
+            <div class="track"><div class="instrument-label" data-toggle-params>MA ▸</div><div class="steps-row"></div></div>
+            <div class="track-params"><span>DECAY</span><input type="range" min="0" max="100" value="50" data-param="decay"></div>
+        </div>
+        <div class="track-wrapper" data-instrument="claves">
+            <div class="track"><div class="instrument-label" data-toggle-params>CL ▸</div><div class="steps-row"></div></div>
+            <div class="track-params"><span>TONE</span><input type="range" min="0" max="100" value="50" data-param="tone"></div>
+        </div>
     </div>
 
     <div class="pattern-select">

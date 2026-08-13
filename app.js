@@ -153,10 +153,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // === Drum UI ===
-    const tracks = document.querySelectorAll('.track');
-    tracks.forEach(track => {
-        const inst = track.dataset.instrument;
-        const stepsRow = track.querySelector('.steps-row');
+    // Toggle collapsible per-drum params
+    document.querySelectorAll('[data-toggle-params]').forEach(label => {
+        label.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const wrapper = label.closest('.track-wrapper');
+            const wasOpen = wrapper.classList.contains('open');
+            wrapper.classList.toggle('open');
+            // Update arrow indicator
+            const name = label.textContent.replace(/\s*[▸▾]\s*$/, '');
+            label.textContent = name + (wasOpen ? ' ▸' : ' ▾');
+        });
+    });
+
+    const trackWrappers = document.querySelectorAll('.track-wrapper');
+    trackWrappers.forEach(wrapper => {
+        const inst = wrapper.dataset.instrument;
+        const stepsRow = wrapper.querySelector('.steps-row');
         for (let i = 0; i < 16; i++) {
             const step = document.createElement('div');
             step.className = 'step';
@@ -173,21 +186,18 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             stepsRow.appendChild(step);
         }
+
+        // Per-drum param sliders
+        wrapper.querySelectorAll('.track-params input[type="range"]').forEach(input => {
+            input.addEventListener('input', (e) => {
+                drums.setParam(inst, e.target.dataset.param, parseInt(e.target.value));
+            });
+        });
     });
 
     document.getElementById('drum-volume').addEventListener('input', (e) => {
         transport.init();
         drums.setVolume(parseInt(e.target.value) / 100);
-    });
-
-    // Drum param knobs
-    document.querySelectorAll('.inst-control').forEach(ctrl => {
-        const inst = ctrl.dataset.instrument;
-        ctrl.querySelectorAll('input[type="range"]').forEach(input => {
-            input.addEventListener('input', (e) => {
-                drums.setParam(inst, e.target.dataset.param, parseInt(e.target.value));
-            });
-        });
     });
 
     // Pattern buttons
