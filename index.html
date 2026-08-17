@@ -43,6 +43,14 @@
         <div class="wave-select">
             <button class="wave-btn active" data-wave="sawtooth">SAW</button>
             <button class="wave-btn" data-wave="square">SQR</button>
+            <button class="wave-btn" data-wave="triangle">TRI</button>
+            <button class="wave-btn" data-wave="sine">SIN</button>
+            <button class="wave-btn" data-wave="pulse">PWM</button>
+        </div>
+        <div class="pwm-control" id="pwm-control" style="display:none">
+            <label>PW</label>
+            <input type="range" id="k-pw" min="5" max="95" value="25">
+            <span class="knob-val" id="v-pw">25%</span>
         </div>
         <div class="section-volume">
             <label>VOL</label>

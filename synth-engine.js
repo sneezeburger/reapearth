@@ -12,6 +12,8 @@ class SynthEngine {
         this.ctx = null;
         this.masterGain = null;
         this.waveform = 'sawtooth';
+        this.pulseWidth = 0.25;
+        this._pulseWave = null;
         this.cutoff = 800;
         this.resonance = 8;
         this.envMod = 3000;
@@ -46,6 +48,41 @@ class SynthEngine {
         this.ctx = ctx;
         this.masterGain = this.ctx.createGain();
         this.masterGain.gain.value = this.volume;
+        this._buildPulseWave();
+    }
+
+    _buildPulseWave() {
+        // Build a PeriodicWave that approximates a pulse wave with variable width
+        const n = 64;
+        const real = new Float32Array(n);
+        const imag = new Float32Array(n);
+        real[0] = 0;
+        imag[0] = 0;
+        const pw = this.pulseWidth;
+        for (let k = 1; k < n; k++) {
+            // Fourier series for a pulse wave: (2/(k*pi)) * sin(k*pi*pw)
+            real[k] = 0;
+            imag[k] = (2 / (k * Math.PI)) * Math.sin(k * Math.PI * pw);
+        }
+        this._pulseWave = this.ctx.createPeriodicWave(real, imag, { disableNormalization: false });
+    }
+
+    setPulseWidth(pw) {
+        this.pulseWidth = pw;
+        if (this.ctx) {
+            this._buildPulseWave();
+            if (this.waveform === 'pulse' && this.activeOsc) {
+                this.activeOsc.setPeriodicWave(this._pulseWave);
+            }
+        }
+    }
+
+    _applyWaveform(osc) {
+        if (this.waveform === 'pulse') {
+            osc.setPeriodicWave(this._pulseWave);
+        } else {
+            osc.type = this.waveform;
+        }
     }
 
     getOutput() {
@@ -92,7 +129,7 @@ class SynthEngine {
             this.killVoice(time);
 
             const osc = this.ctx.createOscillator();
-            osc.type = this.waveform;
+            this._applyWaveform(osc);
             osc.frequency.setValueAtTime(freq, time);
 
             const filter = this.ctx.createBiquadFilter();

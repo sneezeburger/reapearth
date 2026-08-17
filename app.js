@@ -148,8 +148,18 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.wave-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             synth.waveform = btn.dataset.wave;
-            if (synth.activeOsc) synth.activeOsc.type = synth.waveform;
+            document.getElementById('pwm-control').style.display = synth.waveform === 'pulse' ? 'flex' : 'none';
+            if (synth.activeOsc) {
+                synth._applyWaveform(synth.activeOsc);
+            }
         });
+    });
+
+    // Pulse width
+    document.getElementById('k-pw').addEventListener('input', (e) => {
+        const pw = parseInt(e.target.value);
+        document.getElementById('v-pw').textContent = pw + '%';
+        synth.setPulseWidth(pw / 100);
     });
 
     // === Drum UI ===
@@ -230,7 +240,8 @@ document.addEventListener('DOMContentLoaded', () => {
         params.set('sw', Math.round(transport.swing * 100));
 
         // Synth params
-        params.set('w', synth.waveform === 'sawtooth' ? 's' : 'q');
+        params.set('w', synth.waveform === 'sawtooth' ? 's' : synth.waveform === 'square' ? 'q' : synth.waveform === 'triangle' ? 't' : synth.waveform === 'sine' ? 'i' : 'p');
+        if (synth.waveform === 'pulse') params.set('pw', Math.round(synth.pulseWidth * 100));
         params.set('co', Math.round(synth.cutoff));
         params.set('re', synth.resonance);
         params.set('em', Math.round(synth.envMod));
@@ -286,7 +297,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (params.has('t')) { transport.tempo = parseInt(params.get('t')); tempoSlider.value = transport.tempo; tempoDisplay.textContent = transport.tempo; }
         if (params.has('sw')) { transport.swing = parseInt(params.get('sw')) / 100; document.getElementById('swing').value = parseInt(params.get('sw')); }
 
-        if (params.has('w')) { synth.waveform = params.get('w') === 'q' ? 'square' : 'sawtooth'; document.querySelectorAll('.wave-btn').forEach(b => b.classList.toggle('active', b.dataset.wave === synth.waveform)); }
+        if (params.has('w')) { const wm={'s':'sawtooth','q':'square','t':'triangle','i':'sine','p':'pulse'}; synth.waveform = wm[params.get('w')]||'sawtooth'; document.querySelectorAll('.wave-btn').forEach(b => b.classList.toggle('active', b.dataset.wave === synth.waveform)); document.getElementById('pwm-control').style.display = synth.waveform === 'pulse' ? 'flex' : 'none'; }
+        if (params.has('pw')) { const pw = parseInt(params.get('pw')); synth.setPulseWidth(pw / 100); document.getElementById('k-pw').value = pw; document.getElementById('v-pw').textContent = pw + '%'; }
         if (params.has('co')) { synth.cutoff = parseInt(params.get('co')); document.getElementById('k-cutoff').value = synth.cutoff; document.getElementById('v-cutoff').textContent = synth.cutoff; }
         if (params.has('re')) { synth.resonance = parseFloat(params.get('re')); document.getElementById('k-reso').value = synth.resonance; document.getElementById('v-reso').textContent = synth.resonance.toFixed(1); }
         if (params.has('em')) { synth.envMod = parseInt(params.get('em')); document.getElementById('k-envmod').value = synth.envMod; document.getElementById('v-envmod').textContent = synth.envMod; }
