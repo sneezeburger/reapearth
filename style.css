@@ -32,13 +32,13 @@ body {
 }
 
 .brand-name {
-    font-size: 9px;
+    font-size: 14px;
     letter-spacing: 3px;
     color: #888;
 }
 
 .model-name {
-    font-size: 26px;
+    font-size: 39px;
     font-weight: bold;
     background: linear-gradient(135deg, #ff6b35, #ff4400);
     -webkit-background-clip: text;
@@ -66,7 +66,7 @@ body {
 }
 
 .control-group label {
-    font-size: 8px;
+    font-size: 12px;
     letter-spacing: 1px;
     color: #aaa;
 }
@@ -92,7 +92,7 @@ body {
 }
 
 #tempo-display {
-    font-size: 13px;
+    font-size: 20px;
     color: #ff6b35;
     font-weight: bold;
 }
@@ -104,7 +104,7 @@ body {
     border-radius: 4px;
     cursor: pointer;
     font-family: inherit;
-    font-size: 11px;
+    font-size: 17px;
     font-weight: bold;
     letter-spacing: 1px;
     transition: all 0.15s;
@@ -121,7 +121,7 @@ body {
 .btn-share:hover { background: #42a5f5; }
 
 .copy-feedback {
-    font-size: 11px;
+    font-size: 17px;
     color: #4CAF50;
     opacity: 0;
     transition: opacity 0.3s;
@@ -166,13 +166,13 @@ body {
 }
 
 .section-label {
-    font-size: 9px;
+    font-size: 14px;
     letter-spacing: 2px;
     opacity: 0.6;
 }
 
 .section-model {
-    font-size: 24px;
+    font-size: 36px;
     font-weight: bold;
 }
 
@@ -186,7 +186,7 @@ body {
 }
 
 .section-volume label {
-    font-size: 9px;
+    font-size: 14px;
     letter-spacing: 1px;
     opacity: 0.7;
 }
@@ -231,7 +231,7 @@ body {
 }
 
 .knob-group label {
-    font-size: 8px;
+    font-size: 12px;
     letter-spacing: 1px;
     color: #444;
     text-transform: uppercase;
@@ -264,7 +264,7 @@ body {
     border-radius: 2px;
 }
 
-.knob-val { font-size: 9px; color: #555; font-weight: bold; }
+.knob-val { font-size: 14px; color: #555; font-weight: bold; }
 
 /* Wave select */
 .wave-select {
@@ -274,7 +274,7 @@ body {
 
 .wave-btn {
     padding: 4px 10px;
-    font-size: 9px;
+    font-size: 14px;
     background: #ddd;
     border: 1px solid #999;
     color: #444;
@@ -297,12 +297,12 @@ body {
 
 .synth-sequencer .step-numbers span {
     text-align: center;
-    font-size: 8px;
+    font-size: 12px;
     color: #666;
 }
 
 .row-label {
-    font-size: 9px;
+    font-size: 14px;
     font-weight: bold;
     text-align: right;
     padding-right: 6px;
@@ -316,7 +316,7 @@ body {
     cursor: pointer;
     border: 1px solid #999;
     background: #ddd;
-    font-size: 7px;
+    font-size: 17px;
     color: #666;
     display: flex;
     align-items: center;
@@ -336,7 +336,7 @@ body {
     cursor: pointer;
     border: 1px solid #999;
     background: #ddd;
-    font-size: 7px;
+    font-size: 17px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -348,7 +348,7 @@ body {
 .toggle-btn.slide-active { background: #0088ff; border-color: #0066cc; color: #fff; }
 
 .note-display {
-    font-size: 8px;
+    font-size: 12px;
     text-align: center;
     color: #333;
     font-weight: bold;
@@ -362,7 +362,7 @@ body {
 .note-display:hover { background: rgba(255,68,0,0.2); }
 
 .oct-btn {
-    font-size: 7px;
+    font-size: 17px;
     text-align: center;
     cursor: pointer;
     color: #555;
@@ -396,7 +396,7 @@ body {
 }
 
 .track-params span {
-    font-size: 7px;
+    font-size: 17px;
     letter-spacing: 1px;
     color: #888;
 }
@@ -422,7 +422,7 @@ body {
 
 .separator {
     color: #555;
-    font-size: 18px;
+    font-size: 27px;
     margin: 0 4px;
 }
 
@@ -442,7 +442,7 @@ body {
 
 .drum-sequencer .steps-row.numbers span {
     text-align: center;
-    font-size: 9px;
+    font-size: 14px;
     color: #666;
 }
 
@@ -454,7 +454,7 @@ body {
 
 .instrument-label {
     width: 38px;
-    font-size: 9px;
+    font-size: 14px;
     font-weight: bold;
     color: #aaa;
     text-align: right;
@@ -501,7 +501,7 @@ body {
 }
 
 .pattern-select label {
-    font-size: 10px;
+    font-size: 15px;
     letter-spacing: 1px;
     color: #888;
 }
@@ -514,7 +514,7 @@ body {
     background: #222;
     color: #aaa;
     font-weight: bold;
-    font-size: 11px;
+    font-size: 17px;
     cursor: pointer;
     transition: all 0.15s;
 }
