@@ -249,6 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Drum pattern (all 4)
         params.set('dp', drums.currentPattern);
+        params.set('dv', document.getElementById('drum-volume').value);
         const patStrings = [];
         for (let p = 0; p < 4; p++) {
             const instBits = [];
@@ -262,6 +263,17 @@ document.addEventListener('DOMContentLoaded', () => {
             patStrings.push(instBits.join(''));
         }
         params.set('dr', patStrings.join('-'));
+
+        // Per-drum params
+        const drumParamParts = [];
+        for (const inst of drums.instruments) {
+            const p = drums.params[inst];
+            if (!p || Object.keys(p).length === 0) continue;
+            for (const [key, val] of Object.entries(p)) {
+                drumParamParts.push(`${inst}.${key}=${val}`);
+            }
+        }
+        if (drumParamParts.length > 0) params.set('ip', drumParamParts.join(','));
 
         const base = window.location.href.split('?')[0];
         return base + '?' + params.toString();
@@ -306,6 +318,12 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.pattern-btn').forEach(b => b.classList.toggle('active', parseInt(b.dataset.pattern) === drums.currentPattern));
         }
 
+        if (params.has('dv')) {
+            const dv = parseInt(params.get('dv'));
+            document.getElementById('drum-volume').value = dv;
+            // drums.setVolume needs transport.init() first, defer via the slider value
+        }
+
         if (params.has('dr')) {
             const patStrings = params.get('dr').split('-');
             for (let p = 0; p < Math.min(patStrings.length, 4); p++) {
@@ -319,6 +337,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
             updateDrumGrid();
+        }
+
+        if (params.has('ip')) {
+            const parts = params.get('ip').split(',');
+            for (const part of parts) {
+                const [instKey, val] = part.split('=');
+                const [inst, param] = instKey.split('.');
+                drums.setParam(inst, param, parseInt(val));
+                const ctrl = document.querySelector(`.track-wrapper[data-instrument="${inst}"] .track-params input[data-param="${param}"]`);
+                if (ctrl) ctrl.value = val;
+            }
         }
     }
 
